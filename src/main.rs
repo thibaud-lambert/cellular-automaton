@@ -2,6 +2,7 @@ mod core;
 use core::grid::Grid;
 use core::rule::Rule;
 
+use std::env;
 use std::fmt;
 
 extern crate rand;
@@ -53,8 +54,13 @@ impl Rule<State> for LifeRule {
 }
 
 fn main() {
-    println!("Hello, world!");
-    let grid_size = 20;
+    let args_list: Vec<_> = env::args().collect();
+    if args_list.len() < 3 {
+        println!("Not enough arguments : {} grid_size step_number", args_list[0]);
+        std::process::exit(1);
+    }
+
+    let grid_size = args_list[1].parse::<usize>().unwrap();
     let mut g = Grid::new(grid_size,grid_size,State::DEAD,LifeRule);
 
     for i in 0..g.n {
@@ -74,7 +80,8 @@ fn main() {
     print!("{:?}",g);
     std::thread::sleep_ms(500);
 
-    for i in 0..100 {
+    let step_number = args_list[2].parse::<usize>().unwrap();
+    for i in 0..step_number {
         println!("step:{}",i);
         g = g.step();
         print!("{:?}",g);
