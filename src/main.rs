@@ -4,6 +4,7 @@ use core::rule::Rule;
 
 use std::env;
 use std::fmt;
+use std::time::Duration;
 
 extern crate rand;
 
@@ -65,9 +66,9 @@ fn main() {
 
     for i in 0..g.n {
         for j in 0..g.m {
-            if(rand::random::<bool>()) {
+            if rand::random::<bool>() {
                 g.cells[j+i*g.m] = State::ALIVE;
-            }
+         }
         }
     }
 
@@ -78,13 +79,15 @@ fn main() {
     }
 
     print!("{:?}",g);
-    std::thread::sleep_ms(500);
+    let dur = Duration::new(0, 4*10u32.pow(8));
+
+    std::thread::sleep(dur);
 
     let step_number = args_list[2].parse::<usize>().unwrap();
     for i in 0..step_number {
         println!("step:{}",i);
         g = g.step();
         print!("{:?}",g);
-        std::thread::sleep_ms(200);
+        std::thread::sleep(dur);
     }
 }

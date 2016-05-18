@@ -63,9 +63,9 @@ impl<S : fmt::Debug, R : Rule<S>> fmt::Debug for Grid<S,R> {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         for i in 0..self.n {
             for j in 0..self.m {
-                write!(f,"{:?}",self.cells[j+i*self.m]);
+                write!(f,"{:?}",self.cells[j+i*self.m]).unwrap();
             }
-            write!(f,"\n");
+            write!(f,"\n").unwrap();
         }
         write!(f,"\n")
     }
